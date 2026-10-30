@@ -1,0 +1,53 @@
+{
+  "enabled": {
+    "description": "启用画图",
+    "type": "bool",
+    "default": true
+  },
+  "providers_file": {
+    "description": "图片 provider 配置文件",
+    "type": "string",
+    "default": "/AstrBot/data/plugin_data/astrbot_plugin_draw/providers.json",
+    "hint": "里面放着 API key、base_url、模型和画风；只读这个文件，不需要 angel_brush。"
+  },
+  "model": {
+    "description": "生图模型",
+    "type": "string",
+    "default": "",
+    "hint": "留空用 providers.json 里的 default_model_id；也可以在插件页面的「设置」里选。"
+  },
+  "negative_prompt": {
+    "description": "默认负面提示词",
+    "type": "string",
+    "default": "",
+    "hint": "留空用内置（排除人物/文字/水印）；会拼在提示词后面。"
+  },
+  "style": {
+    "description": "画风",
+    "type": "string",
+    "default": "",
+    "hint": "拼在每条提示词末尾；聊天画图用这个，说说配图由说说外挂自己的风格接管。留空不加风格。"
+  },
+  "size": {
+    "description": "图片尺寸",
+    "type": "string",
+    "default": "",
+    "hint": "留空用 providers.json 里模型的默认尺寸，例如 1024x1024。"
+  },
+  "watermark_off": {
+    "description": "去掉 SiliconFlow 水印",
+    "type": "bool",
+    "default": true,
+    "hint": "给 SiliconFlow 请求加 X-Enable-Watermark: 0。"
+  },
+  "timeout": {
+    "description": "生图超时（秒）",
+    "type": "int",
+    "default": 120
+  },
+  "max_prompt_chars": {
+    "description": "提示词最大长度",
+    "type": "int",
+    "default": 600
+  }
+}
