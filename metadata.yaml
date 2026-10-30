@@ -1,7 +1,7 @@
 name: astrbot_plugin_draw
 display_name: 画图
-short_desc: 多提供方画图与 LLM 画图工具
-desc: 画图/生图指令、多提供方与模型回退、默认负面词、去水印、最近生成图；兼容 angel_brush 的 providers.json。
+short_desc: 多提供方画图 + LLM 画图工具
+desc: 支持 /画图、/生图 指令与 LLM 工具；多提供方/多模型、失败自动回退、负面词、去水印、最近作品页；兼容 angel_brush 的 providers.json。
 version: 0.1.0
 author: dafeiyu
 repo: https://github.com/Oskrrrr/astrbot_plugin_draw
