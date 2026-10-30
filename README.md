@@ -15,7 +15,7 @@
 
 | 你想做什么 | 说说画师怎么帮你 |
 |---|---|
-| 给说说配图 | 被 [QQ空间外挂](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 调用时，按外挂/角色卡给的提示词出图；失败时外挂自动退回纯文字 |
+| 给说说配图 | 被 [QQ空间说说管家](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 调用时，按管家/角色卡给的提示词出图；失败时管家自动退回纯文字 |
 | 聊天里直接出图 | `/画图 一只橘猫在窗台` / `/生图 ...`，管理员指令，生成后直接发图 |
 | 让模型自己画 | 注册 LLM 工具 `image_draw`，模型可在对话中调用，再把图片发给用户 |
 | 多服务商、多模型 | 一个 `providers.json` 放多个提供方，每个提供方多个模型，页面里切换 |
@@ -43,13 +43,13 @@
 
 ## 🖼️ 给说说配图
 
-[QQ空间外挂](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 发说说时会调用本插件的 `generate()`：
+[QQ空间说说管家](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 发说说时会调用本插件的 `generate()`：
 
-- 说说外挂/角色卡决定画面要求、画风、负面词；
+- 说说管家/角色卡决定画面要求、画风、负面词；
 - 说说画师只负责用 `providers.json` 里的模型把提示词变成图片；
-- 生成失败时，说说外挂自动改发纯文字，不会让整条说说失败。
+- 生成失败时，说说管家自动改发纯文字，不会让整条说说失败。
 
-也就是说：**说说画师是“画师”，说说外挂是“编辑”**——编辑决定画什么，画师负责画出来。
+也就是说：**说说画师是“画师”，说说管家是“编辑”**——编辑决定画什么，画师负责画出来。
 
 ## ⚙️ 配置
 
@@ -58,7 +58,7 @@
 | `providers_file` | 提供方 JSON 路径；默认在插件数据目录下 |
 | `model` | 当前使用模型；留空用 `providers.json` 的 `default_model_id` |
 | `negative_prompt` | 默认负面词；留空用内置 |
-| `style` | 聊天画图的画风；说说配图由 [说说外挂](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext)/[角色卡](https://github.com/Oskrrrr/astrbot_plugin_persona_card) 接管 |
+| `style` | 聊天画图的画风；说说配图由 [QQ空间说说管家](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext)/[角色卡](https://github.com/Oskrrrr/astrbot_plugin_persona_card) 接管 |
 | `size` | 图片尺寸；留空用模型默认尺寸 |
 | `watermark_off` | 请求去掉 [SiliconFlow](https://siliconflow.cn/) 水印 |
 | `timeout` | 生图超时（秒） |
