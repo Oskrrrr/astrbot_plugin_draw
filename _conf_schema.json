@@ -7,8 +7,8 @@
   "providers_file": {
     "description": "图片 provider 配置文件",
     "type": "string",
-    "default": "/AstrBot/data/plugin_data/astrbot_plugin_draw/providers.json",
-    "hint": "里面放着 API key、base_url、模型和画风；只读这个文件，不需要 angel_brush。"
+    "default": "",
+    "hint": "留空用插件数据目录下的 providers.json；里面放着 API key、base_url、模型和画风。"
   },
   "model": {
     "description": "生图模型",

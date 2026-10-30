@@ -25,12 +25,10 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 from .client import ImageClient, ImageClientError, mask_key, vendor_of
 
 PLUGIN_NAME = "astrbot_plugin_draw"
-DEFAULT_PROVIDERS = "/AstrBot/data/plugin_data/astrbot_plugin_draw/providers.json"
 DEFAULT_NEGATIVE = (
     "人物, 人, 少女, 少年, 人脸, 肖像, 手, 腿, 人形剪影, 人群, 生物, 卡通角色, "
     "文字, 汉字, 字母, 字幕, 水印, logo, 招牌文字, 乱码, 界面UI"
 )
-LAST_IMAGE_FILE = Path("/AstrBot/data/plugin_data/last_gen_image.json")
 
 TOOL_DESCRIPTION = (
     "根据一段详细的中文画面描述生成一张图片，自动保存到插件数据目录并返回图片的绝对路径。"
@@ -49,13 +47,17 @@ except Exception:  # pragma: no cover
 
 
 def _data_dir() -> Path:
-    try:
-        from astrbot.core.utils.astrbot_path import get_astrbot_plugin_data_path
+    from astrbot.core.utils.astrbot_path import get_astrbot_plugin_data_path
 
-        root = Path(get_astrbot_plugin_data_path())
-    except Exception:
-        root = Path("/AstrBot/data/plugin_data")
-    return root / PLUGIN_NAME
+    return Path(get_astrbot_plugin_data_path()) / PLUGIN_NAME
+
+
+def _default_providers_file() -> str:
+    return str(_data_dir() / "providers.json")
+
+
+def _last_image_file() -> Path:
+    return _data_dir() / "last_gen_image.json"
 
 
 def _options_from_config(config) -> dict[str, Any]:
@@ -73,7 +75,7 @@ def _options_from_config(config) -> dict[str, Any]:
 
     return {
         "enabled": bool(get("enabled", True)),
-        "providers_file": str(get("providers_file", "") or DEFAULT_PROVIDERS),
+        "providers_file": str(get("providers_file", "") or _default_providers_file()),
         "model": str(get("model", "") or "").strip(),
         "size": str(get("size", "") or "").strip(),
         "negative_prompt": str(get("negative_prompt", "") or ""),
@@ -302,7 +304,7 @@ class DrawPlugin(Star):
     def _apply_options(self, values: dict[str, Any]) -> None:
         self._opts = dict(values)
         self.enabled = bool(values.get("enabled"))
-        self.providers_file = str(values.get("providers_file") or DEFAULT_PROVIDERS)
+        self.providers_file = str(values.get("providers_file") or _default_providers_file())
         self.negative = str(values.get("negative_prompt") or "") or DEFAULT_NEGATIVE
         self.size = str(values.get("size") or "").strip()
         self.watermark_off = bool(values.get("watermark_off"))
@@ -797,21 +799,22 @@ class DrawPlugin(Star):
             return paths
 
     def _remember(self, path: str) -> None:
-        """写 last_gen_image.json，给其它插件（比如说说配图）取用。"""
+        """把最近生成图写到插件数据目录，给其它插件按需读取。"""
         try:
+            target = _last_image_file()
             data: dict[str, Any] = {}
-            if LAST_IMAGE_FILE.is_file():
+            if target.is_file():
                 try:
-                    loaded = json.loads(LAST_IMAGE_FILE.read_text(encoding="utf-8-sig"))
+                    loaded = json.loads(target.read_text(encoding="utf-8-sig"))
                     if isinstance(loaded, dict):
                         data = loaded
                 except Exception:
                     data = {}
             data["*"] = {"path": path, "ts": time.time()}
-            LAST_IMAGE_FILE.parent.mkdir(parents=True, exist_ok=True)
-            tmp = LAST_IMAGE_FILE.with_suffix(".json.tmp")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            tmp = target.with_suffix(".json.tmp")
             tmp.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
-            os.replace(tmp, LAST_IMAGE_FILE)
+            os.replace(tmp, target)
         except Exception:
             logger.debug("[draw] 记录最近生成图失败", exc_info=True)
 
