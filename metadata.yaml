@@ -1,13 +1,15 @@
 name: astrbot_plugin_draw
-display_name: 画图
-short_desc: 多提供方画图 + LLM 画图工具
-desc: 支持 /画图、/生图 指令与 LLM 工具；多提供方/多模型、失败自动回退、负面词、去水印、最近作品页；兼容 angel_brush 的 providers.json。
-version: 0.1.2
+display_name: 说说画师
+short_desc: 给说说配图的多模型 AI 画图
+desc: 说说画师：给 QQ 说说/空间配图；支持 /画图、/生图 与 LLM 工具，多提供方/多模型、失败自动回退、负面词、去水印、最近作品页；兼容 angel_brush 的 providers.json。
+version: 0.1.3
 author: Oskrrrr
 repo: https://github.com/Oskrrrr/astrbot_plugin_draw
 astrbot_version: ">=4.16,<5"
 tags:
+  - 说说配图
   - 画图
   - 生图
   - AI
   - 工具
+  - QQ空间

@@ -1,20 +1,21 @@
 <div align="center">
 
-# 🎨 画图
+# 🖼️ 说说画师
 
 [![AstrBot](https://img.shields.io/badge/AstrBot-%3E%3D4.16-27a7d8)](https://github.com/AstrBotDevs/AstrBot)
 [![Release](https://img.shields.io/github/v/release/Oskrrrr/astrbot_plugin_draw?color=27a7d8&label=Release)](https://github.com/Oskrrrr/astrbot_plugin_draw/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 
-**在 [AstrBot](https://github.com/AstrBotDevs/AstrBot) 里，用一句 `/画图`，或者让模型自己调用工具，把画面描述变成图片。**
+**让每一条说说都有配图，也支持在聊天里直接 `/画图`。**
 
 </div>
 
 ## ✨ 特色
 
-| 你想做什么 | 画图怎么帮你 |
+| 你想做什么 | 说说画师怎么帮你 |
 |---|---|
+| 给说说配图 | 被 [QQ空间外挂](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 调用时，按外挂/角色卡给的提示词出图；失败时外挂自动退回纯文字 |
 | 聊天里直接出图 | `/画图 一只橘猫在窗台` / `/生图 ...`，管理员指令，生成后直接发图 |
 | 让模型自己画 | 注册 LLM 工具 `image_draw`，模型可在对话中调用，再把图片发给用户 |
 | 多服务商、多模型 | 一个 `providers.json` 放多个提供方，每个提供方多个模型，页面里切换 |
@@ -27,7 +28,7 @@
 1. 把目录放到 `AstrBot/data/plugins/astrbot_plugin_draw`。
 2. 安装依赖：`pip install -r requirements.txt`（主要是 Pillow）。
 3. 重启 AstrBot，或重载插件。
-4. 打开 WebUI 的「插件 → 画图」页面，配置提供方和模型。
+4. 打开 WebUI 的「插件 → 说说画师」页面，配置提供方和模型。
 
 ## 🎨 怎么用
 
@@ -39,6 +40,16 @@
 需要管理员权限；`/生图` 与 `/画图` 等价。
 
 模型侧也可以直接调用 `image_draw` 工具，工具会返回图片的绝对路径，并提示模型用 `send_message_to_user` 把图片发给用户。
+
+## 🖼️ 给说说配图
+
+[QQ空间外挂](https://github.com/Oskrrrr/astrbot_plugin_qzone_ext) 发说说时会调用本插件的 `generate()`：
+
+- 说说外挂/角色卡决定画面要求、画风、负面词；
+- 说说画师只负责用 `providers.json` 里的模型把提示词变成图片；
+- 生成失败时，说说外挂自动改发纯文字，不会让整条说说失败。
+
+也就是说：**说说画师是“画师”，说说外挂是“编辑”**——编辑决定画什么，画师负责画出来。
 
 ## ⚙️ 配置
 

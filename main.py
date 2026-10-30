@@ -1,4 +1,4 @@
-"""画图：把原先打在 angel_brush 里的 /画图、负面词、去水印、最近生成图记录，
+"""说说画师：把原先打在 angel_brush 里的 /画图、负面词、去水印、最近生成图记录，
 做成一个独立插件；同时提供 LLM 工具，让模型在聊天里也能自己画。
 """
 
@@ -324,41 +324,41 @@ class DrawPlugin(Star):
 
     def _register_web_apis(self) -> None:
         routes = (
-            ("selftest", self.api_selftest, ["GET"], "画图：自检"),
-            ("page/state", self.api_page_state, ["GET"], "画图：页面状态与最近作品"),
-            ("page/generate", self.api_page_generate, ["POST"], "画图：页面生成"),
-            ("page/config", self.api_page_config, ["GET"], "画图：读取设置"),
-            ("page/save", self.api_page_save, ["POST"], "画图：保存设置"),
-            ("page/providers", self.api_page_providers, ["GET"], "画图：读取提供方"),
+            ("selftest", self.api_selftest, ["GET"], "说说画师：自检"),
+            ("page/state", self.api_page_state, ["GET"], "说说画师：页面状态与最近作品"),
+            ("page/generate", self.api_page_generate, ["POST"], "说说画师：页面生成"),
+            ("page/config", self.api_page_config, ["GET"], "说说画师：读取设置"),
+            ("page/save", self.api_page_save, ["POST"], "说说画师：保存设置"),
+            ("page/providers", self.api_page_providers, ["GET"], "说说画师：读取提供方"),
             (
                 "page/providers/save",
                 self.api_page_providers_save,
                 ["POST"],
-                "画图：保存提供方",
+                "说说画师：保存提供方",
             ),
             (
                 "page/providers/test",
                 self.api_page_providers_test,
                 ["POST"],
-                "画图：测试提供方连通性",
+                "说说画师：测试提供方连通性",
             ),
             (
                 "page/providers/clear-key",
                 self.api_page_providers_clear_key,
                 ["POST"],
-                "画图：清除提供方 API Key",
+                "说说画师：清除提供方 API Key",
             ),
             (
                 "page/providers/delete",
                 self.api_page_providers_delete,
                 ["POST"],
-                "画图：删除提供方",
+                "说说画师：删除提供方",
             ),
             (
                 "page/providers/set-key",
                 self.api_page_providers_set_key,
                 ["POST"],
-                "画图：保存提供方 API Key",
+                "说说画师：保存提供方 API Key",
             ),
         )
         for endpoint, handler, methods, desc in routes:
@@ -774,7 +774,7 @@ class DrawPlugin(Star):
         不传这两个参数，行为跟以前完全一样。
         """
         if not self.enabled:
-            raise ImageClientError("画图插件已关闭")
+            raise ImageClientError("说说画师已关闭")
         prompt = prompt.strip()[: self.max_prompt]
         if not prompt:
             raise ImageClientError("提示词是空的")

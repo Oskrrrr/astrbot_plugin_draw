@@ -1,6 +1,6 @@
 {
   "enabled": {
-    "description": "启用画图",
+    "description": "启用说说画师",
     "type": "bool",
     "default": true
   },

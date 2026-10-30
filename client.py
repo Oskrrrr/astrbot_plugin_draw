@@ -152,7 +152,7 @@ class ImageClient:
     def _no_model_error(self, data: dict[str, Any]) -> ImageClientError:
         all_providers = [p for p in data.get("providers") or [] if isinstance(p, dict)]
         if not all_providers:
-            return ImageClientError("还没有配置图片接口，去「画图 → 设置」加一个提供方")
+            return ImageClientError("还没有配置图片接口，去「说说画师 → 设置」加一个提供方")
         enabled = [p for p in all_providers if p.get("enabled", True)]
         if not enabled:
             return ImageClientError("提供方都被停用了，启用一个再试")
