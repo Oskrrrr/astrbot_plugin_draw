@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>说说画师</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="topbar">
+        <div class="brand">
+          <span class="logo">🖼️</span>
+          <div>
+            <h1>说说画师</h1>
+            <p>给说说配图，也支持聊天 /画图</p>
+          </div>
+        </div>
+        <div class="model" id="model"></div>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="overview">概览</button>
+        <button class="tab" data-tab="settings">设置</button>
+      </nav>
+
+      <div id="tab-overview">
+        <section class="panel form">
+          <textarea id="prompt" rows="3" placeholder="例如：窗台上蹲着一只橘猫，午后阳光，水彩质感，暖色调"></textarea>
+          <div class="row">
+            <input id="size" placeholder="尺寸（可选，如 1024x1024）" />
+            <button id="btnGo" class="primary">生成</button>
+            <span id="msg" class="msg"></span>
+          </div>
+        </section>
+
+        <section class="panel latest" id="latestPanel" hidden>
+          <div class="latest-img"><img id="latestImg" alt="" /></div>
+          <div class="latest-text">
+            <span class="tag">最新作品</span>
+            <p id="latestPrompt"></p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="head"><h2>最近作品</h2><span id="count" class="muted"></span></div>
+          <div class="grid" id="grid"></div>
+        </section>
+      </div>
+
+      <div id="tab-settings" hidden>
+        <section class="panel settings">
+          <div class="group">
+            <h3>运行</h3>
+            <div class="check-row">
+              <label class="check"><input type="checkbox" id="cfgEnabled" /> 启用插件</label>
+            </div>
+            <div class="provider-card" id="providerCard"></div>
+          </div>
+
+          <div class="group">
+            <div class="group-head">
+              <h3>提供方</h3>
+              <button id="btnAddProvider" type="button" class="ghost">＋ 新增提供方</button>
+            </div>
+            <p class="hint">可以配多个提供方，模型下拉里会列出所有启用的模型。API Key 只显示头尾，留空表示不修改。</p>
+            <div id="providerList" class="provider-list"></div>
+          </div>
+
+          <div class="group">
+            <h3>模型与画风</h3>
+            <div class="grid2">
+              <label class="field">
+                <span>当前使用模型</span>
+                <select id="cfgDefaultModel"></select>
+              </label>
+              <div class="field">
+                <span>画风（聊天画图用；说说配图优先用角色卡的画风，这里只是兜底）</span>
+                <textarea id="cfgStyle" rows="4" placeholder="例如：半写实游戏概念艺术，柔和光影，自然色彩…"></textarea>
+              </div>
+            </div>
+            <div class="check-row" style="margin-top: 10px; align-items: center">
+              <label class="check"><input type="checkbox" id="cfgFallback" /> 首选失败时自动换下一个模型</label>
+            </div>
+          </div>
+
+          <div class="group">
+            <h3>生成参数</h3>
+            <div class="check-row">
+              <label class="check"><input type="checkbox" id="cfgWatermark" /> 请求去掉水印（硅基流动等兼容接口）</label>
+            </div>
+            <div class="grid2">
+              <label class="field">
+                <span>生图超时（秒）</span>
+                <input id="cfgTimeout" type="number" min="20" max="600" />
+              </label>
+              <label class="field">
+                <span>提示词最大字数</span>
+                <input id="cfgMaxPrompt" type="number" min="50" max="2000" />
+              </label>
+            </div>
+            <details class="adv">
+              <summary>高级：配置文件位置</summary>
+              <label class="field">
+                <span>providers.json 路径</span>
+                <input id="cfgProviders" placeholder="留空 = 插件数据目录下的 providers.json" />
+              </label>
+              <p class="hint">一般不用改。换路径后保存会先校验文件能否读出可用模型，再重新加载上面的表单。</p>
+            </details>
+          </div>
+
+          <div class="group">
+            <h3>默认负面提示词</h3>
+            <label class="field">
+              <span>留空用内置（排除人物、文字、水印）</span>
+              <textarea id="cfgNegative" rows="4"></textarea>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="btnSave" class="primary">保存设置</button>
+            <span id="saveMsg" class="msg"></span>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
